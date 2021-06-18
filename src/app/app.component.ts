@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +15,13 @@ export class AppComponent implements OnInit {
   title = 'PractiseReactiveForm';
   myForm!: FormGroup;
 
+  constructor(private fb: FormBuilder) {}
+
   ngOnInit() {
-    this.myForm = new FormGroup({
-      name: new FormControl('Dadabhau'),
-      email: new FormControl(''),
-      message: new FormControl(''),
+    this.myForm = this.fb.group({
+      name: ['Dadabhau', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      message: ['', [Validators.required, Validators.minLength(15)]],
     });
   }
   onSubmit(form: FormGroup) {
